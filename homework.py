@@ -86,8 +86,8 @@ class CashCalculator(Calculator):
 if __name__ == '__main__':
     cash_calc = CashCalculator(5000)
     cash_calc.add_record(Record(3300, 'Поход в кабак', '12.05.2021'))
-    cash_calc.add_record(Record(5100, 'Такси', '07.05.2021'))
-    cash_calc.add_record(Record(1432, 'Мойка'))
+    cash_calc.add_record(Record(5100, 'Такси', '08.05.2021'))
+    cash_calc.add_record(Record(143542, 'Мойка'))
     cash_calc.add_record(Record(500, 'Заправка', '06.05.2021'))
     calor_calc = CaloriesCalculator(1500)
     calor_calc.add_record(Record(300, 'Омлет', '09.05.2021'))

@@ -2,7 +2,6 @@ import datetime as dt
 
 
 class Calculator:
-    WEEK = dt.timedelta(days=7)
 
     def __init__(self, limit):
         self.limit = limit
@@ -18,11 +17,11 @@ class Calculator:
             rec.date == self.today)
 
     def get_week_stats(self):
-        self.today = dt.date.today()
-        week_ago = self.today - self.WEEK
+        today = dt.date.today()
+        week_ago = today - dt.timedelta(days=7)
         return sum(
             rec.amount for rec in self.records if
-            week_ago < rec.date <= self.today)
+            week_ago < rec.date <= today)
 
 
 class Record:
@@ -64,9 +63,9 @@ class CashCalculator(Calculator):
     def get_today_cash_remained(self, currency='rub'):
 
         currency_exchanger = {
-            'rub': (self.RUB_RATE, 'руб'),
-            'usd': (self.USD_RATE, 'USD'),
-            'eur': (self.EURO_RATE, 'Euro')}
+            'rub': [self.RUB_RATE, 'руб'],
+            'usd': [self.USD_RATE, 'USD'],
+            'eur': [self.EURO_RATE, 'Euro']}
 
         if currency not in currency_exchanger:
             raise LookupError(self.UNKNOWN_CURRENCY.format(currency=currency))

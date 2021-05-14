@@ -64,9 +64,9 @@ class CashCalculator(Calculator):
     def get_today_cash_remained(self, currency='rub'):
 
         currency_exchanger = {
-            'rub': [self.RUB_RATE, 'руб'],
-            'usd': [self.USD_RATE, 'USD'],
-            'eur': [self.EURO_RATE, 'Euro']}
+            'rub': (self.RUB_RATE, 'руб'),
+            'usd': (self.USD_RATE, 'USD'),
+            'eur': (self.EURO_RATE, 'Euro')}
 
         if currency not in currency_exchanger:
             raise LookupError(self.UNKNOWN_CURRENCY.format(currency=currency))
@@ -97,5 +97,5 @@ if __name__ == '__main__':
     calor_calc.add_record(Record(450, 'Пельмешки', '05.05.2021'))
     print(cash_calc.get_today_stats())
     print(cash_calc.get_week_stats())
-    print(cash_calc.get_today_cash_remained('eufr'))
+    print(cash_calc.get_today_cash_remained('eur'))
     print(calor_calc.get_calories_remained())

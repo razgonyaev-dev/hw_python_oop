@@ -56,10 +56,6 @@ class CashCalculator(Calculator):
     USD_RATE = 60.0
     EURO_RATE = 70.0
 
-    currency_exchanger = {
-        'rub': [RUB_RATE, 'руб'],
-        'usd': [USD_RATE, 'USD'],
-        'eur': [EURO_RATE, 'Euro']}
 
     STAY_STRONG_WITH_DEBT = 'Денег нет, держись: твой долг - {cash} {title}'
     STAY_STRONG = 'Денег нет, держись'
@@ -67,10 +63,16 @@ class CashCalculator(Calculator):
     UNKNOWN_CURRENCY = 'Неизвестная валюта: "{currency}", попробуйте другую'
 
     def get_today_cash_remained(self, currency='rub'):
-        if currency not in self.currency_exchanger:
-            raise KeyError(self.UNKNOWN_CURRENCY.format(currency=currency))
 
-        rate, title = self.currency_exchanger[currency]
+        currency_exchanger = {
+        'rub': [self.RUB_RATE, 'руб'],
+        'usd': [self.USD_RATE, 'USD'],
+        'eur': [self.EURO_RATE, 'Euro']}
+
+        if currency not in currency_exchanger:
+            raise LookupError(self.UNKNOWN_CURRENCY.format(currency=currency))
+
+        rate, title = currency_exchanger[currency]
 
         cash_remained = self.limit - self.get_today_stats()
         out_cash_remained = round(cash_remained / rate, 2)
@@ -96,5 +98,5 @@ if __name__ == '__main__':
     calor_calc.add_record(Record(450, 'Пельмешки', '05.05.2021'))
     print(cash_calc.get_today_stats())
     print(cash_calc.get_week_stats())
-    print(cash_calc.get_today_cash_remained('eur'))
+    print(cash_calc.get_today_cash_remained('eufr'))
     print(calor_calc.get_calories_remained())

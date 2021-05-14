@@ -3,7 +3,7 @@ import datetime as dt
 
 class Calculator:
     TODAY = dt.date.today()
-    WEEK = dt.timedelta(days=7)
+    WEEK = dt.timedelta(days=6)
 
     def __init__(self, limit):
         self.limit = limit

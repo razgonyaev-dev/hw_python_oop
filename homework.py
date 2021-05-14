@@ -69,7 +69,7 @@ class CashCalculator(Calculator):
         if currency not in self.currency_exchanger:
             raise KeyError(self.UNKNOWN_CURRENCY.format(currency=currency))
 
-        rate, title = CashCalculator.currency_exchanger[currency]
+        rate, title = self.currency_exchanger[currency]
 
         cash_remained = self.limit - self.get_today_stats()
         out_cash_remained = round(cash_remained / rate, 2)

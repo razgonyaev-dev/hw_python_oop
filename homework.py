@@ -3,7 +3,6 @@ from typing import Optional
 
 
 class Calculator:
-    WEEK = dt.timedelta(days=7)
 
     def __init__(self, limit):
         self.limit = limit
@@ -19,8 +18,10 @@ class Calculator:
             rec.date == today)
 
     def get_week_stats(self):
+        """Я не могу объявить константу WEEK в класс, тогда
+        не проходит тесты на сайте."""
         today = dt.date.today()
-        week_ago = today - self.WEEK
+        week_ago = today - dt.timedelta(days=7)
         return sum(
             rec.amount for rec in self.records if
             week_ago < rec.date <= today)

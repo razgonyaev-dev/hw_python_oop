@@ -3,6 +3,7 @@ from typing import Optional
 
 
 class Calculator:
+    WEEK = dt.timedelta(days=7)
 
     def __init__(self, limit):
         self.limit = limit
@@ -12,14 +13,14 @@ class Calculator:
         self.records.append(record)
 
     def get_today_stats(self):
-        self.today = dt.date.today()
+        today = dt.date.today()
         return sum(
             rec.amount for rec in self.records if
-            rec.date == self.today)
+            rec.date == today)
 
     def get_week_stats(self):
         today = dt.date.today()
-        week_ago = today - dt.timedelta(days=7)
+        week_ago = today - self.WEEK
         return sum(
             rec.amount for rec in self.records if
             week_ago < rec.date <= today)
@@ -56,33 +57,39 @@ class CashCalculator(Calculator):
     USD_RATE = 60.0
     EURO_RATE = 70.0
 
+    currency_exchanger = {
+        'rub': [RUB_RATE, 'руб'],
+        'usd': [USD_RATE, 'USD'],
+        'eur': [EURO_RATE, 'Euro']}
+
     STAY_STRONG_WITH_DEBT = 'Денег нет, держись: твой долг - {cash} {title}'
     STAY_STRONG = 'Денег нет, держись'
     YOU_HAVE_MONEY = 'На сегодня осталось {cash} {title}'
     UNKNOWN_CURRENCY = 'Неизвестная валюта: "{currency}", попробуйте другую'
 
     def get_today_cash_remained(self, currency='rub'):
+        if currency not in self.currency_exchanger:
+            raise ValueError(self.UNKNOWN_CURRENCY.format(currency=currency))
 
-        currency_exchanger = {
-            'rub': [self.RUB_RATE, 'руб'],
-            'usd': [self.USD_RATE, 'USD'],
-            'eur': [self.EURO_RATE, 'Euro']}
-
-        if currency not in currency_exchanger:
-            raise LookupError(self.UNKNOWN_CURRENCY.format(currency=currency))
-
-        rate, title = currency_exchanger[currency]
+        rate, title = self.currency_exchanger[currency]
 
         cash_remained = self.limit - self.get_today_stats()
+        
+        if cash_remained == 0:
+            return self.STAY_STRONG
+
         out_cash_remained = round(cash_remained / rate, 2)
 
-        if cash_remained < 0:
-            return self.STAY_STRONG_WITH_DEBT.format(
-                cash=abs(out_cash_remained), title=title)
-        elif cash_remained == 0:
-            return self.STAY_STRONG
-        return self.YOU_HAVE_MONEY.format(
+        if cash_remained > 0:
+            return self.YOU_HAVE_MONEY.format(
             cash=out_cash_remained, title=title)
+        return self.STAY_STRONG_WITH_DEBT.format(
+                cash=abs(out_cash_remained), title=title)
+
+
+
+
+            
 
 
 if __name__ == '__main__':

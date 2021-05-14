@@ -74,7 +74,7 @@ class CashCalculator(Calculator):
         rate, title = self.currency_exchanger[currency]
 
         cash_remained = self.limit - self.get_today_stats()
-        
+
         if cash_remained == 0:
             return self.STAY_STRONG
 
@@ -82,14 +82,9 @@ class CashCalculator(Calculator):
 
         if cash_remained > 0:
             return self.YOU_HAVE_MONEY.format(
-            cash=out_cash_remained, title=title)
+                cash=out_cash_remained, title=title)
         return self.STAY_STRONG_WITH_DEBT.format(
-                cash=abs(out_cash_remained), title=title)
-
-
-
-
-            
+            cash=abs(out_cash_remained), title=title)
 
 
 if __name__ == '__main__':

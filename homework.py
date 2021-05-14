@@ -1,4 +1,5 @@
 import datetime as dt
+from typing import Optional
 
 
 class Calculator:
@@ -28,7 +29,7 @@ class Record:
 
     DATE_FORMAT = '%d.%m.%Y'
 
-    def __init__(self, amount, comment, date=None):
+    def __init__(self, amount, comment, date: Optional[str] = None):
         self.amount = amount
         self.comment = comment
         if date is None:

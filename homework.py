@@ -2,7 +2,6 @@ import datetime as dt
 
 
 class Calculator:
-    TODAY = dt.date.today()
     WEEK = dt.timedelta(days=7)
 
     def __init__(self, limit):
@@ -13,15 +12,17 @@ class Calculator:
         self.records.append(record)
 
     def get_today_stats(self):
+        self.today = dt.date.today()
         return sum(
             rec.amount for rec in self.records if
-            rec.date == self.TODAY)
+            rec.date == self.today)
 
     def get_week_stats(self):
-        week_ago = self.TODAY - self.WEEK
+        self.today = dt.date.today()
+        week_ago = self.today - self.WEEK
         return sum(
             rec.amount for rec in self.records if
-            week_ago < rec.date <= self.TODAY)
+            week_ago < rec.date <= self.today)
 
 
 class Record:
@@ -87,7 +88,7 @@ if __name__ == '__main__':
     cash_calc = CashCalculator(5000)
     cash_calc.add_record(Record(3300, 'Поход в кабак', '12.05.2021'))
     cash_calc.add_record(Record(5100, 'Такси', '08.05.2021'))
-    cash_calc.add_record(Record(143542, 'Мойка'))
+    cash_calc.add_record(Record(1542, 'Мойка'))
     cash_calc.add_record(Record(500, 'Заправка', '06.05.2021'))
     calor_calc = CaloriesCalculator(1500)
     calor_calc.add_record(Record(300, 'Омлет', '09.05.2021'))

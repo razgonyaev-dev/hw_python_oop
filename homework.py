@@ -56,7 +56,6 @@ class CashCalculator(Calculator):
     USD_RATE = 60.0
     EURO_RATE = 70.0
 
-
     STAY_STRONG_WITH_DEBT = 'Денег нет, держись: твой долг - {cash} {title}'
     STAY_STRONG = 'Денег нет, держись'
     YOU_HAVE_MONEY = 'На сегодня осталось {cash} {title}'
@@ -65,9 +64,9 @@ class CashCalculator(Calculator):
     def get_today_cash_remained(self, currency='rub'):
 
         currency_exchanger = {
-        'rub': [self.RUB_RATE, 'руб'],
-        'usd': [self.USD_RATE, 'USD'],
-        'eur': [self.EURO_RATE, 'Euro']}
+            'rub': [self.RUB_RATE, 'руб'],
+            'usd': [self.USD_RATE, 'USD'],
+            'eur': [self.EURO_RATE, 'Euro']}
 
         if currency not in currency_exchanger:
             raise LookupError(self.UNKNOWN_CURRENCY.format(currency=currency))

@@ -3,7 +3,6 @@ from typing import Optional
 
 
 class Calculator:
-
     def __init__(self, limit):
         self.limit = limit
         self.records = []
@@ -71,16 +70,11 @@ class CashCalculator(Calculator):
     def get_today_cash_remained(self, currency='rub'):
         if currency not in self.currency_exchanger:
             raise ValueError(self.UNKNOWN_CURRENCY.format(currency=currency))
-
-        rate, title = self.currency_exchanger[currency]
-
         cash_remained = self.limit - self.get_today_stats()
-
         if cash_remained == 0:
             return self.STAY_STRONG
-
+        rate, title = self.currency_exchanger[currency]
         out_cash_remained = round(cash_remained / rate, 2)
-
         if cash_remained > 0:
             return self.YOU_HAVE_MONEY.format(
                 cash=out_cash_remained, title=title)
@@ -100,5 +94,5 @@ if __name__ == '__main__':
     calor_calc.add_record(Record(450, 'Пельмешки', '05.05.2021'))
     print(cash_calc.get_today_stats())
     print(cash_calc.get_week_stats())
-    print(cash_calc.get_today_cash_remained('eur'))
+    print(cash_calc.get_today_cash_remained('rub'))
     print(calor_calc.get_calories_remained())
